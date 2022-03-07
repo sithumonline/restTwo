@@ -19,6 +19,7 @@ public class MainApp {
         // final ResourceConfig config = new ResourceConfig().packages("com.mkyong");
 
         final ResourceConfig config = new ResourceConfig(CategoryController.class);
+        config.register(CORSResponseFilter.class);
         final Server server =
                 JettyHttpContainerFactory.createServer(URI.create(BASE_URI), config);
 
