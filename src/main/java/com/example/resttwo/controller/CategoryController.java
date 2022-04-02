@@ -16,11 +16,11 @@ import java.util.HashMap;
 @Path("/api/v1/category")
 public class CategoryController {
 	private final Client client;
-	private final String BASE_URI;
+	private final String BASE_SERVICE_URI;
 
 	public CategoryController(String baseUri) {
 		this.client = ClientBuilder.newClient();
-		this.BASE_URI = baseUri + "/category/";
+		this.BASE_SERVICE_URI = baseUri + "/category/";
 	}
 
 	@POST
@@ -29,7 +29,7 @@ public class CategoryController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCategory(HashMap<String, ?> categoryData) {
 		Entity<HashMap<String, ?>> entity = Entity.entity(categoryData, MediaType.APPLICATION_JSON);
-		return client.target(BASE_URI)
+		return client.target(BASE_SERVICE_URI)
 				.request(MediaType.APPLICATION_JSON)
 				.post(entity, Response.class);
 	}
@@ -40,7 +40,7 @@ public class CategoryController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateCategory(HashMap<String, ?> categoryData, @PathParam("categoryId") Integer categoryId) {
 		Entity<HashMap<String, ?>> entity = Entity.entity(categoryData, MediaType.APPLICATION_JSON);
-		return client.target(BASE_URI + categoryId)
+		return client.target(BASE_SERVICE_URI + categoryId)
 				.request(MediaType.APPLICATION_JSON)
 				.put(entity, Response.class);
 	}
@@ -49,7 +49,7 @@ public class CategoryController {
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCategorys() {
-		return client.target(BASE_URI)
+		return client.target(BASE_SERVICE_URI)
 				.request(MediaType.APPLICATION_JSON)
 				.get(Response.class);
 	}
@@ -59,7 +59,7 @@ public class CategoryController {
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCategoryById(@PathParam("categoryId") Integer categoryId) {
-		return client.target(BASE_URI + categoryId)
+		return client.target(BASE_SERVICE_URI + categoryId)
 				.request(MediaType.APPLICATION_JSON)
 				.get(Response.class);
 	}
@@ -69,7 +69,7 @@ public class CategoryController {
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteById(@PathParam("categoryId") Integer categoryId) {
-		return client.target(BASE_URI + categoryId)
+		return client.target(BASE_SERVICE_URI + categoryId)
 				.request(MediaType.APPLICATION_JSON)
 				.delete(Response.class);
 	}
