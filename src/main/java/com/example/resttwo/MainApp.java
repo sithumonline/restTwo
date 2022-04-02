@@ -1,6 +1,7 @@
 package com.example.resttwo;
 
 import com.example.resttwo.controller.CategoryController;
+import jakarta.ws.rs.core.UriBuilder;
 import org.eclipse.jetty.server.Server;
 import org.glassfish.jersey.jetty.JettyHttpContainerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -11,19 +12,18 @@ import java.util.logging.Logger;
 
 public class MainApp {
 
-    public static final String BASE_URI = "http://localhost:3080/";
+    public static final String BASE_URI = "http://localhost/";
 
     public static Server startServer() {
 
         // scan packages
         // final ResourceConfig config = new ResourceConfig().packages("com.mkyong");
 
-        final ResourceConfig config = new ResourceConfig(CategoryController.class);
-        config.register(CORSResponseFilter.class);
-        final Server server =
-                JettyHttpContainerFactory.createServer(URI.create(BASE_URI), config);
+        final ResourceConfig config = new ResourceConfig()
+                .registerInstances(new CategoryController())
+                .register(CORSResponseFilter.class);
 
-        return server;
+        return JettyHttpContainerFactory.createServer(UriBuilder.fromUri(BASE_URI).port(System.getenv("PORT") != null ? Integer.parseInt(System.getenv("PORT")) : 3080).build(), config);
 
     }
 
