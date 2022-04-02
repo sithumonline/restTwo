@@ -9,8 +9,10 @@ public class DBConnection {
     Connection con = null;
     try {
       Class.forName("com.mysql.jdbc.Driver");
-
-      con = DriverManager.getConnection("jdbc:mysql://localhost:3306/productDB", "root", "mysespw");
+      String url = System.getenv("JDBC_DATABASE_URL") != null ? System.getenv("JDBC_DATABASE_URL") : "jdbc:mysql://localhost:3306/productDB";
+      String user = System.getenv("JDBC_DATABASE_USERNAME") != null ? System.getenv("JDBC_DATABASE_USERNAME") : "root";
+      String password = System.getenv("JDBC_DATABASE_PASSWORD") != null ? System.getenv("JDBC_DATABASE_PASSWORD") : "mysespw";
+      con = DriverManager.getConnection(url, user, password);
     } catch (Exception e) {
       e.printStackTrace();
     }
