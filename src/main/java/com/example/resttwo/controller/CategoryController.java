@@ -10,9 +10,9 @@ import com.example.resttwo.service.CategoryService;
 
 /*
  *default Port : 3080
- *http://localhost:3080/category/*
+ *http://localhost:3080/api/v1/category/*
 */
-@Path("/category")
+@Path("/api/v1/category")
 public class CategoryController {
 	private Category category;
 	private CategoryService categoryService = new CategoryService();
