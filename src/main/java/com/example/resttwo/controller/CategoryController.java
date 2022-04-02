@@ -15,7 +15,7 @@ import com.example.resttwo.service.CategoryService;
 @Path("/api/v1/category")
 public class CategoryController {
 	private Category category;
-	private CategoryService categoryService = new CategoryService();
+	private final CategoryService categoryService = new CategoryService();
 
 	@POST
 	@Path("/")

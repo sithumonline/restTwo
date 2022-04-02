@@ -6,13 +6,13 @@ import org.eclipse.jetty.server.Server;
 import org.glassfish.jersey.jetty.JettyHttpContainerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
-import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainApp {
 
     public static final String BASE_URI = "http://localhost/";
+    public static final int PORT = System.getenv("PORT") != null ? Integer.parseInt(System.getenv("PORT")) : 3080;
 
     public static Server startServer() {
 
@@ -23,7 +23,7 @@ public class MainApp {
                 .registerInstances(new CategoryController())
                 .register(CORSResponseFilter.class);
 
-        return JettyHttpContainerFactory.createServer(UriBuilder.fromUri(BASE_URI).port(System.getenv("PORT") != null ? Integer.parseInt(System.getenv("PORT")) : 3080).build(), config);
+        return JettyHttpContainerFactory.createServer(UriBuilder.fromUri(BASE_URI).port(PORT).build(), config);
 
     }
 
@@ -43,7 +43,7 @@ public class MainApp {
                 }
             }));
 
-            System.out.println(String.format("Application started.%nStop the application using CTRL+C"));
+            System.out.printf("Application started.%nStop the application using CTRL+C%n");
 
             // block and wait shut down signal, like CTRL+C
             Thread.currentThread().join();
