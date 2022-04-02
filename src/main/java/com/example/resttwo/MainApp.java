@@ -12,7 +12,8 @@ import java.util.logging.Logger;
 public class MainApp {
 
     public static final String BASE_URI = "http://localhost/";
-    public static final int PORT = System.getenv("PORT") != null ? Integer.parseInt(System.getenv("PORT")) : 3080;
+    public static final int PORT = System.getenv("PORT") != null ? Integer.parseInt(System.getenv("PORT")) : 4080;
+    public static final String BASE_SERVICE_URI = System.getenv("BASE_SERVICE_URI") != null ? System.getenv("BASE_SERVICE_URI") : "http://localhost:3080/api/v1";
 
     public static Server startServer() {
 
@@ -20,7 +21,7 @@ public class MainApp {
         // final ResourceConfig config = new ResourceConfig().packages("com.mkyong");
 
         final ResourceConfig config = new ResourceConfig()
-                .registerInstances(new CategoryController())
+                .registerInstances(new CategoryController(BASE_SERVICE_URI))
                 .register(CORSResponseFilter.class);
 
         return JettyHttpContainerFactory.createServer(UriBuilder.fromUri(BASE_URI).port(PORT).build(), config);
